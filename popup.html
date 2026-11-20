@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DaoMeo Comic Hider</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-main">
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49"/>
+              <path d="M14.084 14.158a3 3 0 0 1-4.242-4.242"/>
+              <path d="M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143"/>
+              <path d="m2 2 20 20"/>
+            </svg>
+          </div>
+          <div>
+            <h1 class="brand-title">DaoMeo Comic Hider</h1>
+            <p class="brand-sub">Lọc truyện, tag & từ khóa trên DaoMeo</p>
+          </div>
+        </div>
+        <label class="switch" title="Bật / Tắt bộ lọc">
+          <input type="checkbox" id="toggle-enabled" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div id="status-pill" class="status-pill">Đang tải...</div>
+    </header>
+
+    <!-- Quick Toggles -->
+    <section class="toggles">
+      <label class="toggle-row">
+        <span class="toggle-label">Tự động ẩn truyện 18+ (R.18)</span>
+        <span class="switch switch-sm">
+          <input type="checkbox" id="toggle-r18" />
+          <span class="slider"></span>
+        </span>
+      </label>
+      <label class="toggle-row">
+        <span class="toggle-label">Hiển thị mờ thay vì ẩn hẳn (xem/bỏ ẩn nhanh)</span>
+        <span class="switch switch-sm">
+          <input type="checkbox" id="toggle-dim" />
+          <span class="slider"></span>
+        </span>
+      </label>
+      <label class="toggle-row">
+        <span class="toggle-label">Hiện nút "Ẩn" khi di chuột vào truyện</span>
+        <span class="switch switch-sm">
+          <input type="checkbox" id="toggle-btn" />
+          <span class="slider"></span>
+        </span>
+      </label>
+    </section>
+
+    <!-- Tabs -->
+    <nav class="tabs" role="tablist">
+      <button type="button" class="tab active" data-tab="comics" role="tab" aria-selected="true">
+        Truyện (<span id="comics-count">0</span>)
+      </button>
+      <button type="button" class="tab" data-tab="tags" role="tab" aria-selected="false">
+        Tag (<span id="tags-count">0</span>)
+      </button>
+      <button type="button" class="tab" data-tab="keywords" role="tab" aria-selected="false">
+        Từ khóa (<span id="keywords-count">0</span>)
+      </button>
+    </nav>
+
+    <!-- Tab Panels -->
+    <main class="panels">
+      <!-- Hidden Comics Panel -->
+      <section id="panel-comics" class="panel active">
+        <div class="search-box">
+          <input
+            type="search"
+            id="search-comics"
+            placeholder="Tìm truyện đã ẩn..."
+            autocomplete="off"
+          />
+        </div>
+        <div id="comics-list" class="comics-list"></div>
+      </section>
+
+      <!-- Blocked Tags Panel -->
+      <section id="panel-tags" class="panel">
+        <form id="tag-form" class="keyword-form">
+          <input
+            type="text"
+            id="tag-input"
+            placeholder="Tìm hoặc nhập tag, thể loại..."
+            autocomplete="off"
+          />
+          <button type="submit" class="btn-primary">Thêm</button>
+        </form>
+        <div class="tags-scroll">
+          <div class="section-label">Tag / thể loại đang chặn</div>
+          <div id="blocked-tags-list" class="chips-wrap"></div>
+
+          <div class="section-label-row">
+            <span class="section-label">Gợi ý tag trên DaoMeo (bấm để bật/tắt)</span>
+            <span id="tag-catalog-source" class="catalog-badge"></span>
+          </div>
+          <div id="tag-suggestions-list" class="chips-wrap"></div>
+        </div>
+      </section>
+
+      <!-- Blocked Keywords Panel -->
+      <section id="panel-keywords" class="panel">
+        <form id="keyword-form" class="keyword-form">
+          <input
+            type="text"
+            id="keyword-input"
+            placeholder="Nhập từ khóa (cách nhau bởi dấu phẩy)..."
+            autocomplete="off"
+          />
+          <button type="submit" class="btn-primary">Thêm</button>
+        </form>
+        <p class="keyword-hint">
+          Truyện có tên chứa từ khóa (không phân biệt hoa/thường) sẽ tự động bị ẩn.
+        </p>
+        <div id="keywords-list" class="keywords-list"></div>
+      </section>
+    </main>
+
+    <!-- Feedback Banner -->
+    <div id="feedback-bar" class="feedback-bar hidden"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-actions">
+        <button type="button" id="btn-export" class="btn-ghost">Xuất JSON</button>
+        <button type="button" id="btn-import" class="btn-ghost">Nhập JSON</button>
+        <input type="file" id="import-file" accept="application/json,.json" hidden />
+      </div>
+      <button type="button" id="btn-clear-all" class="btn-danger">Xóa hết truyện đã ẩn</button>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+/* Scoped styles for DaoMeo Comic Hider */
+
+[data-dmd-hidden="hide"] {
+  display: none !important;
+}
+
+[data-dmd-hidden="dim"] > :not(.dmd-hide-btn) {
+  opacity: 0.22 !important;
+  filter: grayscale(100%) !important;
+  transition: opacity 0.2s ease, filter 0.2s ease;
+}
+
+.dmd-pos-relative {
+  position: relative !important;
+}
+
+.dmd-hide-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 30;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #d4d4d8;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.18s ease, background-color 0.18s ease, color 0.18s ease, transform 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.dmd-hide-btn svg {
+  width: 14px;
+  height: 14px;
+  pointer-events: none;
+  display: block;
+}
+
+/* Shift left of Daomeo's top-right "Theo dõi truyện" bookmark button on sm+ viewports */
+@media (min-width: 640px) {
+  .dmd-has-bookmark > .dmd-hide-btn {
+    right: 42px;
+  }
+}
+
+.dmd-card-tracked:hover > .dmd-hide-btn,
+.dmd-hide-btn:focus-visible {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .dmd-hide-btn {
+    opacity: 0.85;
+  }
+}
+
+.dmd-hide-btn:hover {
+  background: rgba(225, 29, 72, 0.92);
+  color: #ffffff;
+  border-color: rgba(244, 63, 94, 0.8);
+  transform: scale(1.08);
+}
+
+.dmd-hide-btn.dmd-is-unhide {
+  opacity: 1 !important;
+  background: rgba(0, 180, 216, 0.9);
+  color: #ffffff;
+  border-color: rgba(56, 189, 248, 0.75);
+}
+
+.dmd-hide-btn.dmd-is-unhide:hover {
+  background: #38bdf8;
+  border-color: #7dd3fc;
+  transform: scale(1.08);
+}
+
+.dmd-hide-btn.dmd-is-filter-dimmed {
+  opacity: 0.92 !important;
+  background: rgba(24, 24, 27, 0.88);
+  color: #fb7185;
+  border-color: rgba(244, 63, 94, 0.45);
+}
+
+/* Undo Toast */
+.dmd-toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2147483647;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.dmd-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 340px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #16181b;
+  color: #f4f4f5;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+  font-size: 13px;
+  line-height: 1.35;
+  animation: dmdToastIn 0.18s ease-out;
+}
+
+.dmd-toast-text {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dmd-toast-text strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.dmd-toast-undo {
+  flex-shrink: 0;
+  border: none;
+  background: rgba(0, 180, 216, 0.16);
+  color: #38bdf8;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.dmd-toast-undo:hover {
+  background: #00b4d8;
+  color: #ffffff;
+}
+
+@keyframes dmdToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
